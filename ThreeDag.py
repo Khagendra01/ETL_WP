@@ -14,8 +14,8 @@ default_args = {
 }
 
 
-def print_message(message):
-    print(message)
+def print_message():
+    print("task executed")
 
 
 dag = DAG(
