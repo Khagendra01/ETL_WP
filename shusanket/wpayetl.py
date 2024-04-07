@@ -17,8 +17,9 @@ def transform_data(**context):
     df = context["task_instance"].xcom_pull(task_ids="extract_data")
 
     # Code to transform the extracted data
-    df["random"] = 1
-    return df
+    df2 = df.where(df["creditRange"] == "Good")
+    df2.dropna(subset=["creditRange"], inplace=True)
+    return df2
 
 
 def create_csv(**context):
@@ -31,7 +32,7 @@ def create_csv(**context):
 
 
 with DAG(
-    "wpayetl",
+    "wPayEtl",
     default_args={
         "depends_on_past": False,
         "email": ["airflow@example.com"],
@@ -42,7 +43,7 @@ with DAG(
     },
     description="A simple tutorial DAG",
     schedule=timedelta(minutes=5),
-    start_date=datetime(2024, 4, 7, 8, 55, 0),
+    start_date=datetime(2024, 4, 7, 10, 15, 0),
     catchup=False,
     tags=["example"],
 ) as dag:
